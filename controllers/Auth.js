@@ -165,7 +165,7 @@ exports.signUp = async (req, res) => {
 };
 
 // Login
-const login = async (req, res) => {
+exports.login = async (req, res) => {
     try {
         // Get data from request body
         const {email, password} = req.body;
@@ -178,7 +178,7 @@ const login = async (req, res) => {
             });
         }
         
-        // User check
+        // User check exist or not
         const user = await User.findOne({email}).populate("additionalDetails");
         if(!user){
             return res.status(401).json({
@@ -187,11 +187,12 @@ const login = async (req, res) => {
             });
         }
         
+        // Generate JWT, after password matching
         if(await bcrypt.compare(password, user.password)){
             const payload = {
                 email: user.email,
                 id: user._id,
-                accountType:user.accountType,
+                accountType: user.accountType,
             }
 
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -201,6 +202,7 @@ const login = async (req, res) => {
             user.token = token;
             user.password= undefined;
 
+            // Create cookie and send respond
             const options = {
                 expires: new Date(Date.now() + 3*24*60*60*1000),
                 httpOnly:true,
@@ -230,11 +232,15 @@ const login = async (req, res) => {
 };
 
 // Change Password
-const changePassword = async (req, res) => {
+exports.changePassword = async (req, res) => {
 	try {
+        // Get data from req body
 		const userDetails = await User.findById(req.user.id);
+
+        // We are changing password
 		const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
+        // Validation
 		const isPasswordMatch = await bcrypt.compare(oldPassword, userDetails.password );
 			 
 		if(!isPasswordMatch) {
@@ -246,10 +252,14 @@ const changePassword = async (req, res) => {
             success: false,
             message: "The password and confirm password does not match" });	 
 		}
-			 
+		
+        // Update password in DB
 		const encryptedPassword = await bcrypt.hash(newPassword, 10);
-		const updatedUserDetails = await User.findByIdAndUpdate(req.user.id , { password: encryptedPassword } , { new: true });
-		 
+		const updatedUserDetails = await User.findByIdAndUpdate(req.user.id ,
+        { password: encryptedPassword } ,
+        { new: true });
+		
+        // Send Mail - Password updated
 		try {     
 			const emailResponse = await mailSender(updatedUserDetails.email,
             passwordUpdated(updatedUserDetails.email,
@@ -264,6 +274,7 @@ const changePassword = async (req, res) => {
 			});
 		}
 
+        // Return Response
 		return res.status(200).json({ 
             success: true, 
             message: "Password updated successfully" 
@@ -278,5 +289,3 @@ const changePassword = async (req, res) => {
 		});
 	}
 };
-
-module.exports =  {signUp , login , sendOTP , changePassword};
