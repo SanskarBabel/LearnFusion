@@ -72,8 +72,8 @@ exports.createCourse = async (req, res) => {
       data: newCourse,
       message: "Course Created Successfully",
     })
-    }
-   catch (error) {
+  }
+  catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to create course",
@@ -97,12 +97,12 @@ exports.showAllCourses = async (req, res) => {
          message: 'Data for all courses fetched successfully',
          data: allCourses,
         });
-    } 
+  } 
     catch(error){
         return res.status(404).json({
             success: false,
             message: `Can't Fetch Course Data`,
             error: error.message,
         })
-    }
+  };
 };
