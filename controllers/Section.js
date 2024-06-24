@@ -117,14 +117,15 @@ exports.deleteSection = async (req, res) => {
 
 		res.status(200).json({
 			success:true,
-			message:"Section deleted",
-			data:course
+			message:"Section deleted Successfully",
+			data:course,
 		});
 	} 
     catch (error) {
-		res.status(500).json({
+		return res.status(500).json({
 			success: false,
-			message: "Internal server error",
+			message: "Unable to delete Section, please try again",
+            error: error.message,
 		});
 	}
 };
