@@ -40,9 +40,11 @@ exports.createRating = async (req, res) => {
                 message:'Course is already reviewed by the user',
             });
         };
+
         //create an entry for ratingandreview in RatingAndReview folder in DB;
         const ratingReview = await RatingAndReview.create({
-            rating, review, 
+            rating,
+            review, 
             course:courseId,
             user:userId,
         });
@@ -74,8 +76,9 @@ exports.createRating = async (req, res) => {
 exports.getAverageRating = async (req, res) => {
     try {
         //get course ID
-        const courseId = req.body.courseId;                             
-            
+        const courseId = req.body.courseId;
+        
+        // Calculate Average Rating
         const result = await RatingAndReview.aggregate([
         {
             $match:{course: new mongoose.Types.ObjectId(courseId),},
@@ -112,14 +115,14 @@ exports.getAverageRating = async (req, res) => {
 exports.getAllRating = async (req, res) => {
     try{
         const allReviews = await RatingAndReview.find({}).sort({rating: "desc"})  
-            .populate({
-                        path:"user",
-                        select:"firstName lastName email image",
-                    })
-            .populate({
-                        path:"course",
-                        select: "courseName",
-                    }).exec();
+        .populate({
+                    path:"user",
+                    select:"firstName lastName email image",
+                })
+        .populate({
+                    path:"course",
+                    select: "courseName",
+        }).exec();
 
         return res.status(200).json({
             success:true,
