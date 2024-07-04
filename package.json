@@ -1,31 +1,42 @@
 {
   "name": "learnfusion",
-  "version": "1.0.0",
-  "description": "LearnFusion - an Edtech Web-app",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.2.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "crypto-random-string": "^5.0.0",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-fileupload": "^1.5.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.4",
-    "node-schedule": "^2.1.1",
-    "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.4",
-    "otp-generator": "^4.0.1",
-    "razorpay": "^2.9.4"
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^8.2.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
   }
 }
