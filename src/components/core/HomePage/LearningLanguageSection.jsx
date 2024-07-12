@@ -7,9 +7,9 @@ import CTAButton from "../HomePage/Button";
 
 const LearningLanguageSection = () => {
   return (
-    <div>
-      <div className="text-4xl font-semibold text-center my-10">
-        <div>
+    <div className="mt-[130px] mb-32">
+      <div className="flex flex-col gap-5">
+        <div className="text-4xl font-semibold text-center my-10">
           Your Swiss Knife for
           <HighlightText text={" learning any language"} />
         </div>
@@ -20,7 +20,7 @@ const LearningLanguageSection = () => {
           realistic voice-over, progress tracking, custom schedule and more.{" "}
         </p>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center mt-8 lg:mt-0">
+        <div className="flex flex-row lg:flex-row items-center justify-center mt-8 lg:mt-0">
           <img
             src={know_your_progress}
             alt="KNowYourProgressImage"
